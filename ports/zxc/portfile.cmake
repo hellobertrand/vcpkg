@@ -30,6 +30,14 @@ vcpkg_cmake_config_fixup(CONFIG_PATH lib/cmake/zxc)
 vcpkg_fixup_pkgconfig()
 vcpkg_copy_pdbs()
 
+if(VCPKG_LIBRARY_LINKAGE STREQUAL "static")
+    vcpkg_replace_string(
+        "${CURRENT_PACKAGES_DIR}/include/zxc_export.h"
+        "#ifdef ZXC_STATIC_DEFINE"
+        "#if 1"
+    )
+endif()
+
 file(REMOVE_RECURSE
     "${CURRENT_PACKAGES_DIR}/debug/include"
     "${CURRENT_PACKAGES_DIR}/debug/share"
